@@ -15,6 +15,11 @@ export default function App({ Component, pageProps }: AppProps) {
         html {
           font-family: ${openSans.style.fontFamily};
         }
+        html,
+        body,
+        #__next {
+          height: 100%;
+        }
       `}</style>
       <RootLayout>
         <Component {...pageProps} />

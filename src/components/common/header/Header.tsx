@@ -1,5 +1,5 @@
-import { Logo } from '../logo/Logo';
-import { NavMenu } from '../nav-menu/NavMenu';
+import { Logo } from '@/components/common/logo/Logo';
+import { NavMenu } from '@/components/common/nav-menu/NavMenu';
 
 export const Header = () => {
   return (

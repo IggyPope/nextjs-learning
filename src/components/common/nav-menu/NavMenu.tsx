@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import classNames from 'classnames';
 import { MenuToggle } from '@/components/common/menu-toggle/MenuToggle';
-import { NavList } from '../nav-list/NavList';
+import { NavList } from '@/components/common/nav-list/NavList';
 
 export const NavMenu = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);

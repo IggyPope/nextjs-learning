@@ -1,8 +1,7 @@
 import classNames from 'classnames';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { capitalize } from '@/utils/string';
-import { NewsSections } from '@/constants/enums';
+import { NEWS_SECTIONS } from '@/constants/enums';
 
 type NavListProps = {
   closeMenu: () => void;
@@ -13,22 +12,20 @@ export const NavList: React.FC<NavListProps> = ({ closeMenu }) => {
 
   return (
     <>
-      {['home', ...Object.values(NewsSections)].map((section) => {
-        const href = `/${section.replace(/home/gi, '')}`;
-        const isActive =
-          pathname === `/${section}` || `${pathname}home` === `/${section}`;
+      {NEWS_SECTIONS.map((section) => {
+        const isActive = pathname === section.url;
 
         return (
           <Link
-            key={section}
-            href={href}
+            key={section.name}
+            href={section.url}
             className={classNames([
-              'flex h-full w-fit items-center border-b-4 font-semibold',
+              'flex h-full w-fit items-center border-b-4 font-semibold hover:text-text',
               `${isActive ? 'border-b-main' : 'border-b-transparent text-subtext'}`,
             ])}
             onClick={closeMenu}
           >
-            {capitalize(section)}
+            {section.name}
           </Link>
         );
       })}
