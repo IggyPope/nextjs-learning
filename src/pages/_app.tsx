@@ -1,6 +1,7 @@
 import '@/styles/globals.scss';
 import type { AppProps } from 'next/app';
 import { Open_Sans } from 'next/font/google';
+import { RootLayout } from '@/layouts/RootLayout';
 
 const openSans = Open_Sans({
   subsets: ['latin'],
@@ -15,7 +16,9 @@ export default function App({ Component, pageProps }: AppProps) {
           font-family: ${openSans.style.fontFamily};
         }
       `}</style>
-      <Component {...pageProps} />
+      <RootLayout>
+        <Component {...pageProps} />
+      </RootLayout>
     </>
   );
 }

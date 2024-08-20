@@ -8,20 +8,25 @@ const config: Config = {
     './src/app/**/*.{js,ts,jsx,tsx,mdx}',
   ],
   theme: {
-    textColor: {
-      primary: '#161616',
-      secondary: '#7a7a7a',
-    },
-    backgroundColor: {
-      primary: '#fbfbfb',
+    extend: {
+      boxShadow: {
+        header: '0px 2px 10px 0px rgba(22, 22, 22, 0.10)',
+        card: '0px 0px 10px 0px rgba(22, 22, 22, 0.10)',
+      },
+      colors: {
+        main: '#E33A6D',
+        text: '#161616',
+        subtext: '#7a7a7a',
+        background: '#fbfbfb',
+      },
     },
   },
   plugins: [
     plugin(function ({ addBase, theme }) {
       addBase({
         body: {
-          color: theme('textColor.primary'),
-          backgroundColor: theme('backgroundColor.primary'),
+          color: theme('colors.text'),
+          backgroundColor: theme('colors.background'),
         },
       });
     }),
