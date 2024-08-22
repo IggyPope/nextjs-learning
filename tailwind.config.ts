@@ -1,12 +1,7 @@
 import type { Config } from 'tailwindcss';
-import plugin from 'tailwindcss/plugin';
 
 const config: Config = {
-  content: [
-    './src/pages/**/*.{js,ts,jsx,tsx,mdx}',
-    './src/components/**/*.{js,ts,jsx,tsx,mdx}',
-    './src/app/**/*.{js,ts,jsx,tsx,mdx}',
-  ],
+  content: ['./src/**/*.{js,ts,jsx,tsx,mdx}'],
   theme: {
     extend: {
       boxShadow: {
@@ -19,18 +14,15 @@ const config: Config = {
         subtext: '#7a7a7a',
         background: '#fbfbfb',
       },
+      screens: {
+        xl: '1200px',
+      },
+      spacing: {
+        '15': '3.75rem',
+      },
     },
   },
-  plugins: [
-    plugin(function ({ addBase, theme }) {
-      addBase({
-        body: {
-          color: theme('colors.text'),
-          backgroundColor: theme('colors.background'),
-        },
-      });
-    }),
-  ],
+  plugins: [],
 };
 
 export default config;

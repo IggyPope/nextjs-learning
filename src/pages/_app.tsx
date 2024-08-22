@@ -10,20 +10,10 @@ const openSans = Open_Sans({
 
 export default function App({ Component, pageProps }: AppProps) {
   return (
-    <>
-      <style jsx global>{`
-        html {
-          font-family: ${openSans.style.fontFamily};
-        }
-        html,
-        body,
-        #__next {
-          height: 100%;
-        }
-      `}</style>
+    <div className={openSans.className}>
       <RootLayout>
         <Component {...pageProps} />
       </RootLayout>
-    </>
+    </div>
   );
 }

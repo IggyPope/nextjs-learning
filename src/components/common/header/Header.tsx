@@ -1,13 +1,11 @@
-import { Logo } from '@/components/common/logo/Logo';
-import { NavMenu } from '@/components/common/nav-menu/NavMenu';
+import { NavMenu } from './components/nav-menu/NavMenu';
+import { Logo } from './components/logo/Logo';
 
-export const Header = () => {
-  return (
-    <header className="relative z-10 flex h-[60px] justify-center bg-background px-[15px] shadow-header">
-      <div className="flex h-full w-full max-w-[1200px] items-center justify-between">
-        <Logo />
-        <NavMenu />
-      </div>
-    </header>
-  );
-};
+export const Header: React.FC = () => (
+  <header className="relative flex h-15 justify-center bg-background px-4 shadow-header">
+    <div className="container flex h-full w-full items-center justify-between">
+      <Logo />
+      <NavMenu />
+    </div>
+  </header>
+);
