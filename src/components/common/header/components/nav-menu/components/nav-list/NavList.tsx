@@ -13,7 +13,7 @@ export const NavList: React.FC<Props> = ({ onItemClick }) => {
   return (
     <>
       {Object.entries(NAV_LINKS).map(([href, label]) => {
-        const isActive = pathname === href;
+        const isActive = pathname === `/${href}`;
 
         return (
           <Link
