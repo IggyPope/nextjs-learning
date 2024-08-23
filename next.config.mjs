@@ -28,6 +28,16 @@ const nextConfig = {
     return config;
   },
   reactStrictMode: true,
+  images: {
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'static01.nyt.com',
+        port: '',
+        pathname: '/images/**',
+      },
+    ],
+  },
 };
 
 export default nextConfig;
