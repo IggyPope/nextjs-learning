@@ -5,9 +5,10 @@ import { formatDateString } from './helpers';
 
 type Props = {
   article: Article;
+  index: number;
 };
 
-export const ArticleCard: React.FC<Props> = ({ article }) => (
+export const ArticleCard: React.FC<Props> = ({ article, index }) => (
   <article
     className={classNames(
       'flex w-full flex-col gap-5 shadow-card',
@@ -49,10 +50,12 @@ export const ArticleCard: React.FC<Props> = ({ article }) => (
     >
       {article.multimedia?.length ? (
         <Image
-          src={article.multimedia[0].url}
-          alt={article.multimedia[0].caption}
+          src={article.multimedia[1].url}
+          alt={article.multimedia[1].caption}
           fill={true}
           className={classNames('object-cover object-top', 'md:rounded-r-lg')}
+          priority={index < 2}
+          sizes="(max-width: 768px) 100vw, 50vw"
         />
       ) : (
         <div className="h-full w-full bg-gray-200" />

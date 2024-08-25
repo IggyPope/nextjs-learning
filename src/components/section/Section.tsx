@@ -17,7 +17,7 @@ export const Section: React.FC<Props> = ({ section }) => {
     return <div>{error.message}</div>;
   }
 
-  return data.results.map((article) => (
-    <ArticleCard key={article.url} article={article} />
+  return data.results.map((article, index) => (
+    <ArticleCard key={article.url} article={article} index={index} />
   ));
 };
