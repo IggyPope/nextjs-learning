@@ -1,6 +1,6 @@
 import classNames from 'classnames';
-import { FooterLinks } from '@/components/common/footer/components/footer-links/FooterLinks';
-import { SocialIcons } from '@/components/common/footer/components/social-icons/SocialIcons';
+import { FooterLinks } from './components/footer-links/FooterLinks';
+import { SocialIcons } from './components/social-icons/SocialIcons';
 
 export const Footer: React.FC = () => (
   <footer
