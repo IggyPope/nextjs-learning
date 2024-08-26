@@ -1,15 +1,9 @@
-const enum SectionURLs {
-  HOME = '/',
-  WORLD = '/world',
-  AUTOMOBILES = '/automobiles',
-  TECHNOLOGY = '/technology',
-  BUSINESS = '/business',
-}
+import { Sections } from '@/constants/routes';
 
-export const NAV_LINKS: Record<SectionURLs, string> = {
-  [SectionURLs.HOME]: 'Home',
-  [SectionURLs.WORLD]: 'World',
-  [SectionURLs.AUTOMOBILES]: 'Automobiles',
-  [SectionURLs.TECHNOLOGY]: 'Technology',
-  [SectionURLs.BUSINESS]: 'Business',
+export const NAV_LINKS: Record<Sections, string> = {
+  [Sections.HOME]: 'Home',
+  [Sections.WORLD]: 'World',
+  [Sections.AUTOMOBILES]: 'Automobiles',
+  [Sections.TECHNOLOGY]: 'Technology',
+  [Sections.BUSINESS]: 'Business',
 } as const;

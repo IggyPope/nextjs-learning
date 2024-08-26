@@ -2,6 +2,7 @@ import '@/styles/globals.scss';
 import type { AppProps } from 'next/app';
 import { Open_Sans } from 'next/font/google';
 import { RootLayout } from '@/layouts/RootLayout';
+import { QueryClientProvider } from '@/providers/QueryClientProvider';
 
 const openSans = Open_Sans({
   subsets: ['latin'],
@@ -10,10 +11,12 @@ const openSans = Open_Sans({
 
 export default function App({ Component, pageProps }: AppProps) {
   return (
-    <div className={openSans.className}>
-      <RootLayout>
-        <Component {...pageProps} />
-      </RootLayout>
-    </div>
+    <QueryClientProvider dehydratedState={pageProps.dehydratedState}>
+      <div className={openSans.className}>
+        <RootLayout>
+          <Component {...pageProps} />
+        </RootLayout>
+      </div>
+    </QueryClientProvider>
   );
 }

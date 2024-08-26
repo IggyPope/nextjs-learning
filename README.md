@@ -2,7 +2,9 @@ This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next
 
 ## Getting Started
 
-After cloning this repository, run the following commands:
+After cloning this repository, save `.env.example` file in the root directory as `.env.local` and add your API key as `NEXT_PUBLIC_API_KEY`.
+
+Then run the following commands:
 
 ```bash
 # install dependencies

@@ -12,7 +12,7 @@ export const FooterLinks: React.FC = () => (
     {Object.entries(FOOTER_LINKS).map(([href, label]) => (
       <Link
         key={label}
-        href={href}
+        href={`/${href}`}
         className={classNames('text-subtext', 'hover:text-text')}
       >
         {label}

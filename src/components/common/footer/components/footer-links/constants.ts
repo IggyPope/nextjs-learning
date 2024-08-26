@@ -1,4 +1,4 @@
-import { Pages } from '@/constants/pages';
+import { Pages } from '@/constants/routes';
 
 export const FOOTER_LINKS: Record<Pages, string> = {
   [Pages.ABOUT]: 'About Us',

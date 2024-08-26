@@ -19,6 +19,11 @@ const config: Config = {
       },
       spacing: {
         '15': '3.75rem',
+        '70': '17.5rem',
+        '115': '28.75rem',
+      },
+      lineHeight: {
+        'extra-tight': '1.125',
       },
     },
   },
