@@ -13,4 +13,18 @@
     @apply text-text;
     @apply bg-background;
   }
+
+  h1 {
+    font-size: 28px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 38px;
+  }
+
+  h2 {
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 28px;
+  }
 }

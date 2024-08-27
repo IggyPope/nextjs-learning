@@ -17,7 +17,11 @@ export const Section: React.FC<Props> = ({ section }) => {
     return <div>{error.message}</div>;
   }
 
-  return data.results.map((article, index) => (
-    <ArticleCard key={article.url} article={article} index={index} />
-  ));
+  return (
+    <main className="container mx-auto flex w-full flex-1 flex-col items-center gap-5">
+      {data.results.map((article, index) => (
+        <ArticleCard key={article.url} article={article} index={index} />
+      ))}
+    </main>
+  );
 };
