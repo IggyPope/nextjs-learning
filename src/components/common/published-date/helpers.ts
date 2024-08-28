@@ -1,7 +1,7 @@
 export const formatDateString = (date: string) => {
   const dateObj = new Date(date);
 
-  const dateString = dateObj.toLocaleString('en-GB', {
+  const dateString = dateObj.toLocaleString('en-US', {
     year: 'numeric',
     month: 'long',
     day: 'numeric',

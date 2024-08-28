@@ -1,6 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
 import { Sections } from '@/constants/routes';
-import { fetchArticles } from './module';
+import { fetchArticleByUri, fetchArticles } from './module';
 
 enum QueryKeys {
   ARTICLES = 'articles',
@@ -8,6 +8,12 @@ enum QueryKeys {
 
 export const useArticles = (section: Sections) =>
   useQuery({
-    queryKey: [QueryKeys.ARTICLES],
+    queryKey: [QueryKeys.ARTICLES, section],
     queryFn: () => fetchArticles(section),
+  });
+
+export const useSingleArticle = (uri: string) =>
+  useQuery({
+    queryKey: [QueryKeys.ARTICLES, uri],
+    queryFn: () => fetchArticleByUri(uri),
   });

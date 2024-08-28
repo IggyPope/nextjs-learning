@@ -18,7 +18,9 @@ export const NavList: React.FC<Props> = ({ onItemClick }) => {
         return (
           <Link
             key={href}
-            href={href}
+            href={{
+              pathname: `/${href}`,
+            }}
             className={classNames(
               'flex h-full w-fit items-center border-b-4 font-semibold',
               'hover:text-text',

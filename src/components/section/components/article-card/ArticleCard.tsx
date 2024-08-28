@@ -1,7 +1,9 @@
 import Image from 'next/image';
 import classNames from 'classnames';
+import Link from 'next/link';
 import { Article } from '@/api/news/types';
-import { formatDateString } from './helpers';
+import { Badge } from '@/components/common/badge/Badge';
+import { PublishedDate } from '@/components/common/published-date/PublishedDate';
 
 type Props = {
   article: Article;
@@ -9,57 +11,59 @@ type Props = {
 };
 
 export const ArticleCard: React.FC<Props> = ({ article, index }) => (
-  <article
-    className={classNames(
-      'flex w-full flex-col gap-5 shadow-card',
-      'md:h-115 md:flex-row md:gap-0 md:rounded-lg',
-    )}
+  <Link
+    href={{
+      pathname: `/article/`,
+      query: {
+        uri: article.uri,
+      },
+    }}
+    className="block w-full"
   >
-    <div
+    <article
       className={classNames(
-        'grid h-full grid-cols-[auto_1fr] grid-rows-[auto_auto] gap-5 px-4 pt-5',
-        'md:grid-cols-1 md:grid-rows-[auto_1fr_auto] md:p-10',
+        'flex w-full flex-col gap-5 shadow-card',
+        'md:h-115 md:flex-row md:gap-0 md:rounded-lg',
       )}
     >
-      <span
+      <div
         className={classNames(
-          'w-fit rounded bg-main px-2 py-1 font-semibold leading-extra-tight text-background',
-          'first-letter:uppercase',
+          'grid h-full grid-cols-[auto_1fr] grid-rows-[auto_auto] gap-5 px-4 pt-5',
+          'md:grid-cols-1 md:grid-rows-[auto_1fr_auto] md:p-10',
         )}
       >
-        {article.section || article.subsection || 'Other'}
-      </span>
-      <span
-        className={classNames(
-          'mt-auto text-right text-sm leading-tight',
-          'md:order-last md:text-left',
-        )}
-      >
-        {formatDateString(article.published_date)}
-      </span>
-      <main className="col-span-2 flex flex-col gap-4">
-        <h2 className="text-xl font-semibold">{article.title}</h2>
-        <p>{article.abstract}</p>
-      </main>
-    </div>
-    <div
-      className={classNames(
-        'relative h-70 w-full shrink-0',
-        'md:ml-auto md:h-full md:w-1/2',
-      )}
-    >
-      {article.multimedia?.length ? (
-        <Image
-          src={article.multimedia[1].url}
-          alt={article.multimedia[1].caption}
-          fill={true}
-          className={classNames('object-cover object-top', 'md:rounded-r-lg')}
-          priority={index < 2}
-          sizes="(max-width: 768px) 100vw, 50vw"
+        <Badge content={article.section} />
+        <PublishedDate
+          date={article.published_date}
+          className={classNames(
+            'mt-auto text-right',
+            'md:order-last md:text-left',
+          )}
         />
-      ) : (
-        <div className="h-full w-full bg-gray-200" />
-      )}
-    </div>
-  </article>
+        <main className="col-span-2 flex flex-col gap-4">
+          <h2>{article.title}</h2>
+          <p>{article.abstract}</p>
+        </main>
+      </div>
+      <div
+        className={classNames(
+          'relative h-70 w-full shrink-0',
+          'md:ml-auto md:h-full md:w-1/2',
+        )}
+      >
+        {article.multimedia?.length ? (
+          <Image
+            src={article.multimedia[1].url}
+            alt={article.multimedia[1].caption}
+            fill={true}
+            className={classNames('object-cover object-top', 'md:rounded-r-lg')}
+            priority={index < 2}
+            sizes="(max-width: 768px) 100vw, 50vw"
+          />
+        ) : (
+          <div className="h-full w-full bg-gray-200" />
+        )}
+      </div>
+    </article>
+  </Link>
 );

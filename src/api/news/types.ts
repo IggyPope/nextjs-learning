@@ -1,11 +1,9 @@
-export type BaseResponse<T> = {
+export type ArticlesResponse = {
   status: string;
   copyright: string;
   num_results: number;
-  results: T[];
+  results: Article[];
 };
-
-export type ArticlesResponse = BaseResponse<Article>;
 
 export type Article = {
   section: string;
@@ -23,6 +21,27 @@ export type Article = {
   multimedia: Multimedia[];
 };
 
+export type DetailedArticleResponse = {
+  status: string;
+  copyright: string;
+  response: {
+    docs: DetailedArticle[];
+  };
+};
+
+export type DetailedArticle = {
+  abstract: string;
+  snippet: string;
+  lead_paragraph: string;
+  section_name: string;
+  pub_date: string;
+  source: string;
+  multimedia: Multimedia[];
+  headline: Headline;
+  uri: string;
+  web_url: string;
+};
+
 type Multimedia = {
   url: string;
   format: string;
@@ -31,5 +50,8 @@ type Multimedia = {
   type: string;
   subtype: string;
   caption: string;
-  copyright: string;
+};
+
+type Headline = {
+  main: string;
 };
