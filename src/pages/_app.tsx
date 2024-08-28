@@ -11,7 +11,7 @@ const openSans = Open_Sans({
 
 export default function App({ Component, pageProps }: AppProps) {
   return (
-    <QueryClientProvider dehydratedState={pageProps.dehydratedState}>
+    <QueryClientProvider>
       <div className={openSans.className}>
         <RootLayout>
           <Component {...pageProps} />
