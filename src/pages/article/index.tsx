@@ -1,9 +1,5 @@
 import type { GetServerSideProps, InferGetServerSidePropsType } from 'next';
-import {
-  dehydrate,
-  DehydratedState,
-  HydrationBoundary,
-} from '@tanstack/react-query';
+import { dehydrate, DehydratedState } from '@tanstack/react-query';
 import { Article } from '@/components/article/Article';
 import { prefetchSingleArticle } from '@/api/news/queries';
 import { queryClient } from '@/constants/query-client';
@@ -32,10 +28,6 @@ export const getServerSideProps = (async ({ query }) => {
 
 type Props = InferGetServerSidePropsType<typeof getServerSideProps>;
 
-export default function ArticlePage({ uri, dehydratedState }: Props) {
-  return (
-    <HydrationBoundary state={dehydratedState}>
-      <Article uri={uri} />
-    </HydrationBoundary>
-  );
+export default function ArticlePage({ uri }: Props) {
+  return <Article uri={uri} />;
 }
