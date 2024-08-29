@@ -4,7 +4,7 @@ import Head from 'next/head';
 import { useSingleArticle } from '@/api/news/queries';
 import { Badge } from '@/components/common/badge/Badge';
 import { PublishedDate } from '@/components/common/published-date/PublishedDate';
-import { API_IMAGES_BASE_URL } from '@/constants/variables';
+import { API_IMAGES_BASE_URL, DEPLOY_BASE_URL } from '@/constants/variables';
 
 type Props = {
   uri: string;
@@ -39,11 +39,17 @@ export const Article: React.FC<Props> = ({ uri }) => {
       <Head>
         <title>{headline.main}</title>
         <meta name="description" content={abstract} key="description" />
+        <meta property="og:type" content="article" />
+        <meta property="og:site_name" content="Best News" />
         <meta property="og:title" content={headline.main} />
         <meta property="og:description" content={abstract} />
         <meta
           property="og:image"
           content={`${API_IMAGES_BASE_URL}${multimedia[0].url}`}
+        />
+        <meta
+          property="og:url"
+          content={`${DEPLOY_BASE_URL}article?uri=${uri}`}
         />
       </Head>
       <main className="flex w-full flex-1 flex-col">
