@@ -2,21 +2,15 @@ import {
   dehydrate,
   DehydratedState,
   HydrationBoundary,
-  QueryClient,
 } from '@tanstack/react-query';
 import { GetServerSideProps, InferGetServerSidePropsType } from 'next';
-import { fetchArticles } from '@/api/news/module';
-import { QueryKeys } from '@/api/news/queries';
 import { Section } from '@/components/section/Section';
 import { Sections } from '@/constants/routes';
+import { queryClient } from '@/constants/query-client';
+import { prefetchArticles } from '@/api/news/queries';
 
 export const getServerSideProps = (async () => {
-  const queryClient = new QueryClient();
-
-  await queryClient.prefetchQuery({
-    queryKey: [QueryKeys.ARTICLES, Sections.WORLD],
-    queryFn: () => fetchArticles(Sections.WORLD),
-  });
+  await prefetchArticles(queryClient, Sections.WORLD);
 
   return {
     props: {
