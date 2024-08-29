@@ -1,19 +1,33 @@
-import { ParsedUrlQuery } from 'querystring';
 import type { GetServerSideProps, InferGetServerSidePropsType } from 'next';
+import { dehydrate, DehydratedState } from '@tanstack/react-query';
 import { Article } from '@/components/article/Article';
+import { prefetchSingleArticle } from '@/api/news/queries';
+import { queryClient } from '@/constants/query-client';
 
-export const getServerSideProps = (async ({ query }) => ({
-  props: {
-    uri: query.uri,
-  },
-})) satisfies GetServerSideProps<{ uri: ParsedUrlQuery[string] }>;
+export const getServerSideProps = (async ({ query }) => {
+  const { uri } = query;
 
-export default function ArticlePage({
-  uri,
-}: InferGetServerSidePropsType<typeof getServerSideProps>) {
   if (!(uri && typeof uri === 'string')) {
-    return <div>Article not found</div>;
+    return {
+      notFound: true,
+    };
   }
 
-  return <Article uri={uri}></Article>;
+  await prefetchSingleArticle(queryClient, uri);
+
+  return {
+    props: {
+      uri: uri,
+      dehydratedState: dehydrate(queryClient),
+    },
+  };
+}) satisfies GetServerSideProps<{
+  uri: string;
+  dehydratedState: DehydratedState;
+}>;
+
+type Props = InferGetServerSidePropsType<typeof getServerSideProps>;
+
+export default function ArticlePage({ uri }: Props) {
+  return <Article uri={uri} />;
 }

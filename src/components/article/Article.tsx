@@ -1,9 +1,10 @@
 import classNames from 'classnames';
 import Image from 'next/image';
+import Head from 'next/head';
 import { useSingleArticle } from '@/api/news/queries';
 import { Badge } from '@/components/common/badge/Badge';
 import { PublishedDate } from '@/components/common/published-date/PublishedDate';
-import { API_IMAGES_BASE_URL } from '@/constants/variables';
+import { API_IMAGES_BASE_URL, DEPLOY_BASE_URL } from '@/constants/variables';
 
 type Props = {
   uri: string;
@@ -34,43 +35,61 @@ export const Article: React.FC<Props> = ({ uri }) => {
   } = data.response.docs[0];
 
   return (
-    <main className="flex w-full flex-1 flex-col">
-      <article
-        className={classNames(
-          'container mx-auto flex w-full flex-col gap-5',
-          'md:gap-10',
-        )}
-      >
-        <header
+    <>
+      <Head>
+        <title>{headline.main}</title>
+        <meta name="description" content={abstract} key="description" />
+        <meta property="og:type" content="article" />
+        <meta property="og:site_name" content="Best News" />
+        <meta property="og:title" content={headline.main} />
+        <meta property="og:description" content={abstract} />
+        <meta
+          property="og:image"
+          content={`${API_IMAGES_BASE_URL}${multimedia[0].url}`}
+        />
+        <meta
+          property="og:url"
+          content={`${DEPLOY_BASE_URL}article?uri=${uri}`}
+        />
+      </Head>
+      <main className="flex w-full flex-1 flex-col">
+        <article
           className={classNames(
-            'flex w-full items-center justify-between gap-5 px-4',
-            'md:justify-start md:px-0',
+            'container mx-auto flex w-full flex-col gap-5',
+            'md:gap-10',
           )}
         >
-          <Badge content={section} />
-          <PublishedDate date={date} />
-        </header>
-        <main className="flex flex-col gap-10">
-          <div className={classNames('relative h-70 w-full', 'md:h-115')}>
-            {multimedia.length ? (
-              <Image
-                src={`${API_IMAGES_BASE_URL}${multimedia[0].url}`}
-                alt={multimedia[0].caption || 'article image'}
-                fill={true}
-                className={classNames('object-cover object-center')}
-                priority={true}
-              />
-            ) : (
-              <div className="h-full w-full bg-gray-200" />
+          <header
+            className={classNames(
+              'flex w-full items-center justify-between gap-5 px-4',
+              'md:justify-start md:px-0',
             )}
-          </div>
-          <div className={classNames('flex flex-col gap-4 px-4', 'md:px-0')}>
-            <h1>{headline.main}</h1>
-            <p className="italic">{`"${abstract.slice(0, 90)}..."`}</p>
-          </div>
-          <p className={classNames('px-4', 'md:px-0')}>{paragraph}</p>
-        </main>
-      </article>
-    </main>
+          >
+            <Badge content={section} />
+            <PublishedDate date={date} />
+          </header>
+          <main className="flex flex-col gap-10">
+            <div className={classNames('relative h-70 w-full', 'md:h-115')}>
+              {multimedia.length ? (
+                <Image
+                  src={`${API_IMAGES_BASE_URL}${multimedia[0].url}`}
+                  alt={multimedia[0].caption || 'article image'}
+                  fill={true}
+                  className={classNames('object-cover object-center')}
+                  priority={true}
+                />
+              ) : (
+                <div className="h-full w-full bg-gray-200" />
+              )}
+            </div>
+            <div className={classNames('flex flex-col gap-4 px-4', 'md:px-0')}>
+              <h1>{headline.main}</h1>
+              <p className="italic">{`"${abstract.slice(0, 90)}..."`}</p>
+            </div>
+            <p className={classNames('px-4', 'md:px-0')}>{paragraph}</p>
+          </main>
+        </article>
+      </main>
+    </>
   );
 };

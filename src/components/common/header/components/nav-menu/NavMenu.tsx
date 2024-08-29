@@ -14,7 +14,7 @@ export const NavMenu: React.FC = () => {
     <>
       <menu
         className={classNames(
-          'absolute left-0 right-0 top-full flex-col gap-5 bg-background px-4 py-5 shadow-header',
+          'absolute left-0 right-0 top-full z-10 flex-col gap-5 bg-background px-4 py-5 shadow-header',
           isMenuOpen ? 'flex' : 'hidden',
           'md:static md:z-auto md:flex md:h-full md:flex-row md:gap-8 md:p-0 md:shadow-inherit',
         )}
