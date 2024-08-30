@@ -6,7 +6,7 @@ import { queryClient } from '@/constants/query-client';
 import { prefetchArticles } from '@/api/news/queries';
 
 export const getServerSideProps = (async () => {
-  await prefetchArticles(queryClient, Sections.WORLD);
+  await prefetchArticles(queryClient);
 
   return {
     props: {
@@ -16,5 +16,5 @@ export const getServerSideProps = (async () => {
 }) satisfies GetServerSideProps<{ dehydratedState: DehydratedState }>;
 
 export default function HomePage() {
-  return <Section section={Sections.WORLD} />;
+  return <Section />;
 }

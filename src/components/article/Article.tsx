@@ -7,11 +7,11 @@ import { PublishedDate } from '@/components/common/published-date/PublishedDate'
 import { API_IMAGES_BASE_URL, DEPLOY_BASE_URL } from '@/constants/variables';
 
 type Props = {
-  uri: string;
+  id: string;
 };
 
-export const Article: React.FC<Props> = ({ uri }) => {
-  const { data, error, isPending } = useSingleArticle(uri);
+export const Article: React.FC<Props> = ({ id }) => {
+  const { data, error, isPending } = useSingleArticle(id);
 
   if (isPending) {
     return <div>Loading...</div>;
@@ -21,35 +21,29 @@ export const Article: React.FC<Props> = ({ uri }) => {
     return <div>{error.message}</div>;
   }
 
-  if (data.response.docs.length === 0) {
+  if (!data.data) {
     return <div>Article not found</div>;
   }
 
-  const {
-    section_name: section,
-    pub_date: date,
-    headline,
-    abstract,
-    lead_paragraph: paragraph,
-    multimedia,
-  } = data.response.docs[0];
+  const { title, description, section, paragraph, date, image } =
+    data.data.attributes;
 
   return (
     <>
       <Head>
-        <title>{headline.main}</title>
-        <meta name="description" content={abstract} key="description" />
+        <title>{title}</title>
+        <meta name="description" content={description} key="description" />
         <meta property="og:type" content="article" />
         <meta property="og:site_name" content="Best News" />
-        <meta property="og:title" content={headline.main} />
-        <meta property="og:description" content={abstract} />
+        <meta property="og:title" content={title} />
+        <meta property="og:description" content={description} />
         <meta
           property="og:image"
-          content={`${API_IMAGES_BASE_URL}${multimedia[0].url}`}
+          content={`${API_IMAGES_BASE_URL}${image.data.attributes.url}`}
         />
         <meta
           property="og:url"
-          content={`${DEPLOY_BASE_URL}article?uri=${uri}`}
+          content={`${DEPLOY_BASE_URL}article?id=${id}`}
         />
       </Head>
       <main className="flex w-full flex-1 flex-col">
@@ -70,10 +64,10 @@ export const Article: React.FC<Props> = ({ uri }) => {
           </header>
           <main className="flex flex-col gap-10">
             <div className={classNames('relative h-70 w-full', 'md:h-115')}>
-              {multimedia.length ? (
+              {image ? (
                 <Image
-                  src={`${API_IMAGES_BASE_URL}${multimedia[0].url}`}
-                  alt={multimedia[0].caption || 'article image'}
+                  src={`${API_IMAGES_BASE_URL}${image.data.attributes.url}`}
+                  alt={image.data.attributes.alternativeText || 'article image'}
                   fill={true}
                   className={classNames('object-cover object-center')}
                   priority={true}
@@ -83,8 +77,8 @@ export const Article: React.FC<Props> = ({ uri }) => {
               )}
             </div>
             <div className={classNames('flex flex-col gap-4 px-4', 'md:px-0')}>
-              <h1>{headline.main}</h1>
-              <p className="italic">{`"${abstract.slice(0, 90)}..."`}</p>
+              <h1>{title}</h1>
+              <p className="italic">{`"${description.slice(0, 90)}..."`}</p>
             </div>
             <p className={classNames('px-4', 'md:px-0')}>{paragraph}</p>
           </main>

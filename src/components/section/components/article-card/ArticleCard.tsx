@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { Article } from '@/api/news/types';
 import { Badge } from '@/components/common/badge/Badge';
 import { PublishedDate } from '@/components/common/published-date/PublishedDate';
+import { API_IMAGES_BASE_URL } from '@/constants/variables';
 
 type Props = {
   article: Article;
@@ -15,7 +16,7 @@ export const ArticleCard: React.FC<Props> = ({ article, index }) => (
     href={{
       pathname: `/article/`,
       query: {
-        uri: article.uri,
+        id: article.id,
       },
     }}
     className="block w-full"
@@ -32,17 +33,17 @@ export const ArticleCard: React.FC<Props> = ({ article, index }) => (
           'md:grid-cols-1 md:grid-rows-[auto_1fr_auto] md:p-10',
         )}
       >
-        <Badge content={article.section} />
+        <Badge content={article.attributes.section} />
         <PublishedDate
-          date={article.published_date}
+          date={article.attributes.date}
           className={classNames(
             'mt-auto text-right',
             'md:order-last md:text-left',
           )}
         />
         <main className="col-span-2 flex flex-col gap-4">
-          <h2>{article.title}</h2>
-          <p>{article.abstract}</p>
+          <h2>{article.attributes.title}</h2>
+          <p>{article.attributes.description}</p>
         </main>
       </div>
       <div
@@ -51,10 +52,10 @@ export const ArticleCard: React.FC<Props> = ({ article, index }) => (
           'md:ml-auto md:h-full md:w-1/2',
         )}
       >
-        {article.multimedia?.length ? (
+        {article.attributes.image ? (
           <Image
-            src={article.multimedia[1].url}
-            alt={article.multimedia[1].caption}
+            src={`${API_IMAGES_BASE_URL}${article.attributes.image.data.attributes.url}`}
+            alt={article.attributes.image.data.attributes.alternativeText}
             fill={true}
             className={classNames('object-cover object-top', 'md:rounded-r-lg')}
             priority={index < 2}
