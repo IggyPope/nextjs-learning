@@ -1,57 +1,43 @@
 export type ArticlesResponse = {
-  status: string;
-  copyright: string;
-  num_results: number;
-  results: Article[];
+  data: Article[];
 };
 
 export type Article = {
-  section: string;
-  subsection: string;
+  id: number;
+  attributes: ArticleAttributes;
+};
+
+type ArticleAttributes = {
   title: string;
-  abstract: string;
-  url: string;
-  uri: string;
-  byline: string;
-  item_type: string;
-  updated_date: string;
-  created_date: string;
-  published_date: string;
-  short_url: string;
-  multimedia: Multimedia[];
+  description: string;
+  date: string;
+  createdAt: string;
+  updatedAt: string;
+  publishedA: string;
+  paragraph: string;
+  section: string;
+  image: Image;
 };
 
-export type DetailedArticleResponse = {
-  status: string;
-  copyright: string;
-  response: {
-    docs: DetailedArticle[];
+export type SingleArticleResponse = {
+  data: Article | null;
+};
+
+type Image = {
+  data: {
+    id: number;
+    attributes: {
+      name: string;
+      alternativeText: string;
+      caption: string;
+      width: number;
+      height: number;
+      mime: string;
+      size: number;
+      url: string;
+      provider: string;
+      createdAt: string;
+      updatedAt: string;
+    };
   };
-};
-
-export type DetailedArticle = {
-  abstract: string;
-  snippet: string;
-  lead_paragraph: string;
-  section_name: string;
-  pub_date: string;
-  source: string;
-  multimedia: Multimedia[];
-  headline: Headline;
-  uri: string;
-  web_url: string;
-};
-
-type Multimedia = {
-  url: string;
-  format: string;
-  height: number;
-  width: number;
-  type: string;
-  subtype: string;
-  caption: string;
-};
-
-type Headline = {
-  main: string;
 };
