@@ -5,29 +5,29 @@ import { prefetchSingleArticle } from '@/api/news/queries';
 import { queryClient } from '@/constants/query-client';
 
 export const getServerSideProps = (async ({ query }) => {
-  const { uri } = query;
+  const { id } = query;
 
-  if (!(uri && typeof uri === 'string')) {
+  if (!(id && typeof id === 'string')) {
     return {
       notFound: true,
     };
   }
 
-  await prefetchSingleArticle(queryClient, uri);
+  await prefetchSingleArticle(queryClient, id);
 
   return {
     props: {
-      uri: uri,
+      id: id,
       dehydratedState: dehydrate(queryClient),
     },
   };
 }) satisfies GetServerSideProps<{
-  uri: string;
+  id: string;
   dehydratedState: DehydratedState;
 }>;
 
 type Props = InferGetServerSidePropsType<typeof getServerSideProps>;
 
-export default function ArticlePage({ uri }: Props) {
-  return <Article uri={uri} />;
+export default function ArticlePage({ id }: Props) {
+  return <Article id={id} />;
 }
