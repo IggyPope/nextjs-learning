@@ -1,7 +1,7 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import { z } from 'zod';
-import { contactSchema } from '@/schemas/contact.schema';
-import { sendMail } from '@/libs/sendgrid';
+import { contactSchema } from '@/components/contact/components/contact-form/schema';
+import { sendMail } from '@/utils/sendgrid';
 
 export default async function handler(
   req: NextApiRequest,

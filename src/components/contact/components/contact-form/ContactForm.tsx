@@ -1,7 +1,7 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
-import { useMutation } from '@tanstack/react-query';
-import { type ContactSchema, contactSchema } from '@/schemas/contact.schema';
+import { useContactMutation } from '@/api/contact/queries';
+import { type ContactSchema, contactSchema } from './schema';
 
 export const ContactForm: React.FC = () => {
   const {
@@ -14,49 +14,36 @@ export const ContactForm: React.FC = () => {
     resolver: zodResolver(contactSchema),
   });
 
-  const submitFormData = async (
-    data: ContactSchema,
-  ): Promise<{ message: string }> => {
-    const response = await fetch('/api/contact', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(data),
-    });
-
-    if (!response.ok) {
-      const errorData = await response.json();
-
-      throw new Error(JSON.stringify(errorData));
-    }
-
-    return response.json();
+  const onSubmitSuccess = () => {
+    alert('Form submitted successfully');
+    reset();
   };
 
-  const { mutate } = useMutation({
-    mutationFn: submitFormData,
-    onSuccess: () => {
-      alert('Form submitted successfully');
-      reset();
-    },
-    onError: (error) => {
-      try {
+  const onSubmitError = (error: unknown) => {
+    try {
+      if (error instanceof Error) {
         const errorData = JSON.parse(error.message);
 
-        Object.keys(errorData.errors).forEach((key) => {
+        Object.keys(errorData).forEach((key) => {
           setError(key as keyof ContactSchema, {
             message: errorData[key][0],
           });
         });
-      } catch (error) {
-        alert('An error occurred while submitting the form');
+      } else {
+        throw error;
       }
-    },
+    } catch (error) {
+      alert('An error occurred while submitting the form');
+    }
+  };
+
+  const { mutate } = useContactMutation({
+    onSuccess: onSubmitSuccess,
+    onError: onSubmitError,
   });
 
-  const onSubmit = (data: ContactSchema) => {
-    mutate(data);
+  const onSubmit = (contactData: ContactSchema) => {
+    mutate(contactData);
   };
 
   return (
