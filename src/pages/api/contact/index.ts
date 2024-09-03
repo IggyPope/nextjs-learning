@@ -1,6 +1,7 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import { z } from 'zod';
 import { contactSchema } from '@/schemas/contact.schema';
+import { sendMail } from '@/libs/sendgrid';
 
 export default async function handler(
   req: NextApiRequest,
@@ -19,7 +20,13 @@ export default async function handler(
       return res.status(400).json({ message: 'Invalid request body' });
     }
 
-    // TODO: Send email
+    await sendMail({
+      firstName: parseResult.firstName,
+      lastName: parseResult.lastName,
+      email: parseResult.email,
+      address: parseResult.address,
+      birthday: parseResult.birthday,
+    });
 
     return res.status(200).json({ message: 'Form submitted successfully' });
   } catch (error) {
