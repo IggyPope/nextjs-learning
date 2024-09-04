@@ -1,14 +1,16 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
+import classNames from 'classnames';
 import { useContactMutation } from '@/api/contact/queries';
 import { type ContactSchema, contactSchema } from './schema';
+import { FormInput } from './components/form-input/FormInput';
 
 export const ContactForm: React.FC = () => {
   const {
     handleSubmit,
     register,
     setError,
-    formState: { errors },
+    formState: { errors, isSubmitting },
     reset,
   } = useForm<ContactSchema>({
     resolver: zodResolver(contactSchema),
@@ -55,61 +57,45 @@ export const ContactForm: React.FC = () => {
         noValidate
       >
         <div className="flex w-full flex-col gap-2">
-          <div className="flex w-full flex-col">
-            <input
-              {...register('firstName')}
-              type="text"
-              placeholder="First Name"
-              className="w-full border border-gray-300 p-2"
-            />
-            <p className="h-5 text-sm text-red-500">
-              {errors.firstName?.message}
-            </p>
-          </div>
-          <div className="flex w-full flex-col">
-            <input
-              {...register('lastName')}
-              type="text"
-              placeholder="Last Name"
-              className="w-full border border-gray-300 p-2"
-            />
-            <p className="h-5 text-sm text-red-500">
-              {errors.lastName?.message}
-            </p>
-          </div>
-          <div className="flex w-full flex-col">
-            <input
-              {...register('email')}
-              type="email"
-              placeholder="Email"
-              className="w-full border border-gray-300 p-2"
-            />
-            <p className="h-5 text-sm text-red-500">{errors.email?.message}</p>
-          </div>
-          <div className="flex w-full flex-col">
-            <input
-              {...register('address')}
-              type="text"
-              placeholder="Address"
-              className="w-full border border-gray-300 p-2"
-            />
-            <p className="h-5 text-sm text-red-500">
-              {errors.address?.message}
-            </p>
-          </div>
-          <div className="flex w-full flex-col">
-            <input
-              {...register('birthday')}
-              type="date"
-              placeholder="Birthday"
-              className="w-full border border-gray-300 p-2"
-            />
-            <p className="h-5 text-sm text-red-500">
-              {errors.birthday?.message}
-            </p>
-          </div>
+          <FormInput
+            {...register('firstName')}
+            type="text"
+            placeholder="First Name"
+            errorMessage={errors.firstName?.message}
+          />
+          <FormInput
+            {...register('lastName')}
+            type="text"
+            placeholder="Last Name"
+            errorMessage={errors.lastName?.message}
+          />
+          <FormInput
+            {...register('email')}
+            type="email"
+            placeholder="Email"
+            errorMessage={errors.email?.message}
+          />
+          <FormInput
+            {...register('address')}
+            type="text"
+            placeholder="Address"
+            errorMessage={errors.address?.message}
+          />
+          <FormInput
+            {...register('birthday')}
+            type="date"
+            placeholder="Birthday"
+            errorMessage={errors.birthday?.message}
+          />
         </div>
-        <button type="submit" className="w-full border border-gray-300 p-2">
+        <button
+          type="submit"
+          className={classNames(
+            'w-full border border-gray-300 p-2',
+            'hover:bg-gray-100',
+          )}
+          disabled={isSubmitting}
+        >
           Submit
         </button>
       </form>
