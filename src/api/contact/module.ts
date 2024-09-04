@@ -1,6 +1,12 @@
-import { ContactSchema } from '@/components/contact/components/contact-form/schema';
+type ContactPayload = {
+  firstName: string;
+  lastName: string;
+  email: string;
+  address: string;
+  birthday: string;
+};
 
-export const submitFormData = async (contactData: ContactSchema) => {
+export const submitFormData = async (contactData: ContactPayload) => {
   const response = await fetch('/api/contact', {
     method: 'POST',
     headers: {
