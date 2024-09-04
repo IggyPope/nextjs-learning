@@ -16,36 +16,32 @@ export const ContactForm: React.FC = () => {
     resolver: zodResolver(contactSchema),
   });
 
-  const onSubmitSuccess = () => {
-    alert('Form submitted successfully');
-    reset();
-  };
-
-  const onSubmitError = (error: unknown) => {
-    try {
-      if (error instanceof Error) {
-        const errorData = JSON.parse(error.message);
-
-        Object.keys(errorData).forEach((key) => {
-          setError(key as keyof ContactSchema, {
-            message: errorData[key][0],
-          });
-        });
-      } else {
-        throw error;
-      }
-    } catch (error) {
-      alert('An error occurred while submitting the form');
-    }
-  };
-
-  const { mutate } = useContactMutation({
-    onSuccess: onSubmitSuccess,
-    onError: onSubmitError,
-  });
+  const { mutate } = useContactMutation();
 
   const onSubmit = (contactData: ContactSchema) => {
-    mutate(contactData);
+    mutate(contactData, {
+      onSuccess: () => {
+        alert('Form submitted successfully');
+        reset();
+      },
+      onError: (error: unknown) => {
+        try {
+          if (error instanceof Error) {
+            const errorData = JSON.parse(error.message);
+
+            Object.keys(errorData).forEach((key) => {
+              setError(key as keyof ContactSchema, {
+                message: errorData[key][0],
+              });
+            });
+          } else {
+            throw error;
+          }
+        } catch (error) {
+          alert('An error occurred while submitting the form');
+        }
+      },
+    });
   };
 
   return (
