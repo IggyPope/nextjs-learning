@@ -7,10 +7,10 @@ type Props = {
 } & UseFormRegisterReturn &
   Omit<React.ComponentPropsWithoutRef<'input'>, 'className'>;
 
-export const FormInput = forwardRef<HTMLInputElement, Props>(function FormInput(
-  { errorMessage, ...otherProps },
-  ref,
-) {
+const FormInputWithRef: React.ForwardRefRenderFunction<
+  HTMLInputElement,
+  Props
+> = ({ errorMessage, ...otherProps }, ref) => {
   return (
     <div className="flex w-full flex-col">
       <input
@@ -25,4 +25,6 @@ export const FormInput = forwardRef<HTMLInputElement, Props>(function FormInput(
       <p className="h-5 text-sm text-red-500">{errorMessage}</p>
     </div>
   );
-});
+};
+
+export const FormInput = forwardRef(FormInputWithRef);
