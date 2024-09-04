@@ -1,4 +1,4 @@
-import sgMail from '@sendgrid/mail';
+import sendgrid from '@sendgrid/mail';
 import { SENDGRID_API_KEY, SENDGRID_SENDER_EMAIL } from '@/constants/variables';
 
 type Props = {
@@ -20,9 +20,9 @@ export const sendMail = async ({
     throw new Error('Sendgrid variables are not defined');
   }
 
-  sgMail.setApiKey(SENDGRID_API_KEY);
+  sendgrid.setApiKey(SENDGRID_API_KEY);
 
-  const msg: sgMail.MailDataRequired = {
+  const msg: sendgrid.MailDataRequired = {
     to: [email, SENDGRID_SENDER_EMAIL],
     from: SENDGRID_SENDER_EMAIL,
     subject: 'Contact details received',
@@ -36,7 +36,7 @@ export const sendMail = async ({
   };
 
   try {
-    await sgMail.send(msg);
+    await sendgrid.send(msg);
     console.log('Email sent successfully');
   } catch {
     throw new Error('An error occurred while sending the email');
